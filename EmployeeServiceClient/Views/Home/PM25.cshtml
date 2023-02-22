@@ -1,0 +1,63 @@
+﻿@section Styles{
+   
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet"></link>
+    <style>
+
+    </style>
+}
+
+
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <td>Site</td>
+            <td>Country</td>
+            <td>PM2.5</td>
+            <td>Creation Date</td>
+
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script src="//cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+
+    
+    <script>
+        $(document).ready(function(){
+            $("table").dataTable({
+            ajax:{
+                type:"GET",
+                url: "https://data.epa.gov.tw/api/v2/aqx_p_02?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&sort=datacreationdate%20desc&format=JSON",
+                dataSrc:function(data){return data["records"];}
+
+
+            },
+            columns:[
+                {"data":"site","width":"25%"},
+                {"data":"county","width":"25%"},
+                { "data": "pm25", "width": "25%" },
+                { "data": "datacreationdate", "width": "25%" },
+
+            
+            ],
+            fixedHeader:{
+            header:true
+            
+           
+            },
+            language:{
+                    url: "//cdn.datatables.net/plug-ins/1.13.2/i18n/zh-HANT.json",
+            }
+            
+            });
+        });
+    </script>
+
+  
+}

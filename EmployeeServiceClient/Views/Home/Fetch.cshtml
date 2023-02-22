@@ -1,0 +1,159 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<button id="getEmployees" class="btn btn-warning">GetEmployees</button>
+<button id="getEmployeesById" class="btn btn-warning">GetEmployeesById</button>
+<button id="postEmployees" class="btn btn-warning">PostEmployees</button> 
+<button id="putEmployees" class="btn btn-warning">PutEmployees</button>
+<button id="deleteEmployees" class="btn btn-warning">DeleteEmployees</button>
+<div id="employeeList"></div>
+<input type="text" id="empId"/>
+
+
+
+@section Scripts{
+    <script>
+        var webApiBaseAddr = "https://localhost:7226";
+
+        $("#getEmployees").on("click",(event)=>{
+            //alert("getEmployees");
+            fetch(`${webApiBaseAddr}/api/Employees`, {
+                method:"GET",
+                
+            
+            }).then(result=>{
+                if(result.ok){
+                    return result.json();
+                }
+            
+            }).then(data=>{
+                //alert(JSON.stringify(data));
+                $("#employeeList").empty();
+                var str='<ul>'
+                $.each(data,function(index,item){
+                    str+=`<li>${item.employeeId},${item.firstName},${item.lastName},${item.title}`
+                });
+                str+='</ul>'
+                $("#employeeList").html(str);
+
+            }).catch(err=>{
+                alert(err);
+            
+            });
+        });
+
+         $("#getEmployeesById").on("click",(event)=>{
+            //alert("getEmployeesById");
+            var empId = $("#empId").val();
+            fetch(`${webApiBaseAddr}/api/Employees/${empId}`, {
+                method:"GET",
+                
+            
+            }).then(result=>{
+                if(result.ok){
+                    return result.json();
+                }
+            
+            }).then(data=>{
+                alert(JSON.stringify(data));
+                
+
+            }).catch(err=>{
+                alert(err);
+            
+            });
+
+
+
+        });
+
+         $("#postEmployees").on("click",(event)=>{ //post新增
+            //alert("postEmployees");
+            var emp={
+                EmployeeId:0,
+                FirstName:"Amy",
+                LastName:"B",
+                Title:"CEO"
+            };
+
+            fetch(`${webApiBaseAddr}/api/Employees`, {
+                method:"POST",
+                body:JSON.stringify(emp),
+                headers:{
+                    "content-type":"application/json"
+                }
+
+            }).then(data => {
+                if(result.ok){
+                    return result.text();
+                }
+
+         
+            }).then(data => {
+                alert(data);
+
+
+            }).catch(err => {
+                alert(err);
+
+            });
+
+
+        });
+
+        $("#putEmployees").on("click", (event) => { //put修改
+            //alert("putEmployees");
+            var emp={
+                EmployeeId:1012,
+                FirstName:"Student",
+                LastName:"CCCCCCCC",
+                Title:"Sales Manager"
+            };
+
+            fetch(`${webApiBaseAddr}/api/Employees/1012`, {
+                method:"PUT",
+                body:JSON.stringify(emp),
+                 headers:{
+                    "content-type":"application/json"
+                }
+            
+            }).then(result=>{
+            if(result.ok){
+                return result.json();
+            }
+            
+            }).then(data=>{
+                alert(data);
+            
+            
+            }).catch(err=>{
+                alert(err);
+            
+            })
+
+        });
+
+         $("#deleteEmployees").on("click",(event)=>{
+            //alert("deleteEmployees");
+            fetch(`${webApiBaseAddr}/api/Employees/1012`,{
+                method: "Delete",
+
+            }).then(result=>{
+            
+            }).then(data=>{
+                alert(data);
+            
+            }).catch(err=>{
+                alert(err);
+
+            })
+
+        });
+
+
+
+    </script>
+}

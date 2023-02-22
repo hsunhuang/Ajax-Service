@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeeService.Models;
 using EmployeeService.DTO;
+using Microsoft.AspNetCore.Cors;
 
 namespace EmployeeService.Controllers
 {
+    [EnableCors("AllowAny")]
+
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase

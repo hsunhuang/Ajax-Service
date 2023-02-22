@@ -1,0 +1,65 @@
+﻿@section Styles{
+   
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css"></link>
+    <style>
+
+    </style>
+}
+
+
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <td>EmployeeId</td>
+            <td>FirstName</td>
+            <td>LastName</td>
+            <td>Title</td>
+
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script src="//cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+
+    
+    <script>
+        var webApiBaseAddr = "https://localhost:7226";
+
+        $(document).ready(function(){
+            $("table").dataTable({
+            ajax:{
+                type:"GET",
+                    url: "${webApiBaseAddr}/api/Employees",
+                dataSrc:function(data){return data;}
+
+
+            },
+            columns:[
+                {"data":"employeeId","width":"25%"},
+                {"data":"firstName","width":"25%"},
+                {"data": "LastName", "width": "25%" },
+                {"data": "title", "width": "25%" },
+
+            
+            ],
+            fixedHeader:{
+            header:true
+            
+           
+            },
+            language:{
+                    url: "//cdn.datatables.net/plug-ins/1.13.2/i18n/zh-HANT.json",
+            }
+            
+            });
+        });
+    </script>
+
+  
+}
