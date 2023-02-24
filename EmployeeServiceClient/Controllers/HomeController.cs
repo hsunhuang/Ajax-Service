@@ -30,6 +30,13 @@ namespace EmployeeServiceClient.Controllers
         }
 
 
+        public IActionResult VUESPA()
+        {
+            return View();
+        }
+
+
+
         public IActionResult PM25()
         {
             return View();

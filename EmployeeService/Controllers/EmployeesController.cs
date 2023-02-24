@@ -38,6 +38,22 @@ namespace EmployeeService.Controllers
             });
         }
 
+        //***動詞(例如[HttpPost]) 跟Uri(api/Employee)不可以重複!
+        //篩選功能
+        [HttpPost("Filter")] //Uri:api/Employee/Filter
+        public async Task<IEnumerable<EmployeeDTO>> FilterEmployees([FromBody]EmployeeDTO employeeDTO)
+        {
+            return _context.Employees.Where(emp => emp.FirstName.Contains(employeeDTO.FirstName) || emp.LastName.Contains(employeeDTO.FirstName) || emp.Title.Contains(employeeDTO.FirstName)).Select(emp => new EmployeeDTO
+            {//視情況增加篩選項目
+
+                EmployeeId = emp.EmployeeId,
+                FirstName = emp.FirstName,
+                LastName= emp.LastName,
+                Title=emp.Title,
+            });
+        }
+
+
         //2. GET: api/Employees/5
         [HttpGet("{id}")]
         public async Task<EmployeeDTO> GetEmployees(int id)
@@ -58,6 +74,8 @@ namespace EmployeeService.Controllers
 
             };
         }
+
+
 
         //3. PUT: api/Employees/5  修改
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
