@@ -57,7 +57,7 @@
                             <td>{{item.title}}</td>
                             <td>
                                 <button class="btn btn-success " @@click="edit(item.employeeId)">編輯</button>
-                                <button class="btn btn-danger" @@click="cancel(item.employeeId)">刪除</button>
+                                <button class="btn btn-danger" @@click="deleteEmployee(item.employeeId)">刪除</button>
                             </td>
                         </template>
                     </tr>
@@ -229,19 +229,16 @@
                         //alert("delete");
                         let _this = this;
                         var ret = confirm("確定要刪除嗎?");
-                        if (ret == trun) {
-                            axios.delete(`${webApiBaseAddr}/api/Employees`)
-                                .then(response => {
-                                    alert(response.data);
-                                    _this.filterEmoloyees();
+                        if (ret == true) {
+                            axios.delete(`${webApiBaseAddr}/api/Employees/${employeeId}`).then(response => {
+                                alert(response.data);
 
-                                });
+                                _this.filterEmployee();
 
+                            });
                         }
+                        
                     },
-
-
-
                     showModal: function () {
                         //alert("showModal");
                         $('#insertModal').modal('show');
@@ -263,7 +260,7 @@
                     },
 
                 }
-             };
-                var app = Vue.createApp(vueApp).mount("#app");
+            };
+            var app = Vue.createApp(vueApp).mount("#app");
         </script>
     }
